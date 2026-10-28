@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>K4 Prime Run 6.7 — играть онлайн</title>
+<title>K4 Prime Run 6.7.1 — играть онлайн</title>
 <meta name="theme-color" content="#0b1018">
 <meta name="description" content="K4 Prime Run — футуристическая игра с 10 миссиями, дронами, боссами и фирменным оперативником K4 Prime. Играй на телефоне и компьютере.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="K4 Run">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="k4-build" content="a33cb0a5e7cf">
-<link rel="canonical" href="https://k4runprime.ru/">
+<meta name="k4-build" content="07703c003065">
+<link rel="canonical" href="https://davvvee018.github.io/K4PrimeRun/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="K4 Prime Run — играть онлайн">
-<meta property="og:url" content="https://k4runprime.ru/">
+<meta property="og:url" content="https://davvvee018.github.io/K4PrimeRun/">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
   :root {
@@ -210,6 +210,83 @@
   .compact .minor { font-size: 10px; }
   .compact .box { max-height: calc(100% - 6px); }
   @media (max-width: 480px) { .level-choice { padding: 5px 1px; } }
+
+  /* K4 RUN 6.7.1 | FULLSCREEN: canvas occupies the whole browser viewport */
+  html, body {
+    width: 100%; height: 100%; height: 100dvh;
+    min-height: 100%; margin: 0; padding: 0;
+    overflow: hidden; overscroll-behavior: none;
+    background: #070b13;
+  }
+  body {display: block;}
+  #stage {
+    position: fixed; inset: 0;
+    width: 100vw !important; height: 100vh !important; height: 100dvh !important;
+    border: none !important; border-radius: 0 !important;
+    box-shadow: none !important; margin: 0 !important;
+    background: #070b13;
+  }
+  #stage canvas {width: 100%; height: 100%;}
+  #panel {padding:
+    max(calc(var(--u) * 16), env(safe-area-inset-top, 0px))
+    max(calc(var(--u) * 16), env(safe-area-inset-right, 0px))
+    max(calc(var(--u) * 16), env(safe-area-inset-bottom, 0px))
+    max(calc(var(--u) * 16), env(safe-area-inset-left, 0px));}
+  #fullscreen {
+    position: absolute; z-index: 12;
+    right: max(12px, env(safe-area-inset-right, 0px));
+    top: max(10px, env(safe-area-inset-top, 0px));
+    min-width: 38px; min-height: 38px;
+    border-radius: 13px; border: 1px solid #ffffff44;
+    background: rgba(8,12,21,.78); color: #fff;
+    font-size: 23px; line-height: 1;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    touch-action: manipulation;
+  }
+  .playing #fullscreen {font-size: 19px; opacity: .76;}
+  @media (pointer: coarse) {
+    .playing:not(.no-jump) #jump, .playing:not(.no-jump) #dash {
+      left: max(calc(var(--u) * 18), env(safe-area-inset-left, 0px));
+    }
+    .playing #pause, .playing #snd {
+      right: max(calc(var(--u) * 14), env(safe-area-inset-right, 0px));
+    }
+  }
+  .portrait #rotate {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; z-index: 14; inset: 0;
+    padding: 30px; box-sizing: border-box;
+    background: #090e17; color: #ffbd78;
+    font: 700 18px/1.5 system-ui, sans-serif;
+    text-align: center;
+  }
+  .portrait #fullscreen {display:none;}
+  /* The opening screen belongs to the game, rather than a white floating window. */
+  #panel.is-menu {
+    background: linear-gradient(115deg, rgba(5,9,19,.84), rgba(8,14,27,.60) 67%, rgba(9,13,24,.82));
+  }
+  #panel.is-menu .box {
+    width: 100%; max-width: calc(var(--u) * 900);
+    background: transparent; color: #f7f8ff;
+    border-radius: 0; box-shadow: none;
+    padding: calc(var(--u) * 22) calc(var(--u) * 24);
+  }
+  #panel.is-menu h1 { color: #fff; text-shadow: 0 6px 34px #02070b88; }
+  #panel.is-menu h1 span { color: #ff994d; }
+  #panel.is-menu .club {color: #ffb988;}
+  #panel.is-menu .lead, #panel.is-menu .minor {color: #d4dce9;}
+  #panel.is-menu .meta { color: #d1d8e8; }
+  #panel.is-menu .coin {color: #ffbe7d; background: rgba(255,157,72,.15);}
+  #panel.is-menu .go {
+    background: linear-gradient(140deg, #ffa653, #e96726);
+    color: #161016; border-color: #ffc08b33;
+    box-shadow: 0 10px 32px #0008;
+  }
+  #panel.is-menu .ghost {
+    background: rgba(20,30,47,.82); color: #f6f7ff;
+    border-color: rgba(220,236,255,.25);
+  }
+  #panel.is-menu .ghost:hover {background: rgba(39,49,70,.9);}
 </style>
 <style id="k4-site-style">
 .k4-standalone .install-link { display:none !important; }
@@ -231,6 +308,7 @@
   <canvas id="c" aria-label="Игра Prime Run"></canvas>
   <div id="panel"></div>
   <button class="ctl" id="pause" type="button">Пауза</button>
+  <button id="fullscreen" type="button" title="На весь экран" aria-label="Переключить полноэкранный режим">⛶</button>
   <button class="ctl" id="snd" type="button">Звук: вкл</button>
   <button class="ctl" id="jump" type="button">Прыжок</button>
   <button class="ctl" id="dash" type="button">Рывок</button>
@@ -348,22 +426,45 @@
   /* ---------- Размер ---------- */
   var k = 1;
   function resize() {
-    var pad = innerWidth < 600 ? 8 : 16;
-    var w = Math.min(innerWidth - pad * 2, (innerHeight - pad * 2) * W / H);
-    w = Math.max(w, 200);
-    var h = w * H / W;
-    stage.style.width = w + "px";
-    stage.style.height = h + "px";
-    stage.style.setProperty("--u", (w / W) + "px");
+    // No window or rounded card: the canvas is always the exact visible viewport.
+    var vw = Math.max(1, window.innerWidth), vh = Math.max(1, window.innerHeight);
+    var ratio = vw / vh;
+    // Preserve unit scaling: expand the virtual scene instead of stretching the art.
+    if (ratio >= 960 / 540) {
+      H = 540; W = Math.round(H * ratio);
+    } else {
+      // On 16:10 screens, expand vertical scenery; portrait shows rotate help.
+      W = 960; H = Math.round(W / ratio);
+    }
+    stage.style.width = vw + "px";
+    stage.style.height = vh + "px";
+    stage.style.setProperty("--u", (vw / W) + "px");
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    cv.width = Math.round(w * dpr);
-    cv.height = Math.round(h * dpr);
+    cv.width = Math.round(vw * dpr);
+    cv.height = Math.round(vh * dpr);
     k = cv.width / W;
-    stage.classList.toggle("compact", h < 410);
-    document.body.classList.toggle("portrait", innerHeight > innerWidth);
-    stage.classList.toggle("portrait", innerHeight > innerWidth);
+    stage.classList.toggle("compact", vh < 410);
+    document.body.classList.toggle("portrait", vh > vw);
+    stage.classList.toggle("portrait", vh > vw);
   }
   window.addEventListener("resize", resize);
+  window.addEventListener("orientationchange", resize);
+  document.addEventListener("fullscreenchange", resize);
+  var fullscreenBtn = $("#fullscreen");
+  function fullscreenLabel() {
+    var isFull = !!document.fullscreenElement;
+    fullscreenBtn.textContent = isFull ? "⤢" : "⛶";
+    fullscreenBtn.title = isFull ? "Выйти из полного экрана" : "На весь экран";
+  }
+  fullscreenBtn.addEventListener("click", function(e) {
+    e.preventDefault(); e.stopPropagation();
+    var target = document.documentElement;
+    var p;
+    if (document.fullscreenElement) p = document.exitFullscreen && document.exitFullscreen();
+    else p = (target.requestFullscreen || target.webkitRequestFullscreen || function(){ return null; }).call(target);
+    if(p && p.catch) p.catch(function(){ /* Safari may not support fullscreen API. */ });
+  });
+  document.addEventListener("fullscreenchange", fullscreenLabel);
 
   /* ---------- Звук ---------- */
   var actx = null, muted = false;
@@ -545,7 +646,7 @@
     var html="", club='<div class="club">'+esc(CONFIG.clubName)+'</div>';
     var meta='<div class="meta">'+coinDisplay()+'<span>Открыто '+Math.min(CAMPAIGN.length,unlocked)+'/'+CAMPAIGN.length+' миссий</span><span>Рекорд '+fmt(best)+'</span></div>';
     if(kind==="menu") {
-      html='<div class="box">'+club+'<h1>PRIME <span>RUN 6.7</span></h1>'+
+      html='<div class="box">'+club+'<h1>PRIME <span>RUN 6.7.1</span></h1>'+
         '<p class="lead">10 миров с плавной графикой, новым освещением, опасными механизмами и фирменным оперативником.</p>'+meta+
         '<div class="actions"><button class="go" type="button" data-act="map">Карта кампании</button>'+
         '<button class="ghost" type="button" data-act="shop">Магазин улучшений</button></div>'+
@@ -582,6 +683,7 @@
         '<button class="ghost" type="button" data-act="map">Карта</button>'+
         '<button class="ghost" type="button" data-act="shop">Магазин</button></div></div>';
     }
+    panel.classList.toggle("is-menu", kind === "menu");
     panel.innerHTML=html;
     panel.hidden=false;
   }
